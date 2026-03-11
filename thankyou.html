@@ -1,36 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>GCB Digital Banking | Verification Submitted</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-<style>
-  :root {
-    --primary: #0b3a66;
-    --primary-dark: #082c4d;
-    --accent: #ffcc00;
-    --bg: #f3f5f8;
-    --card-bg: #ffffff;
-    --text-main: #1f2933;
-    --text-muted: #6b7280;
-    --border: #e5e7eb;
-    --success: #16a34a;
-  }
-
-  * { box-sizing: border-box; }
-
-  body {
-    margin: 0;
-    min-height: 100vh;
-    font-family: "Inter", system-ui, sans-serif;
-    background: var(--bg);
-    color: var(--text-main);
-    display: flex;
-    flex-direction: column;
-    opacity: 0;
+ opacity: 0;
     transition: opacity 0.5s ease;
   }
 
@@ -71,38 +39,7 @@
     font-size: 15px;
   }
 
-  .brand-text strong {
-    font-size: 15px;
-    letter-spacing: 0.4px;
-  }
 
-  .brand-text span {
-    font-size: 12px;
-    opacity: 0.85;
-  }
-
-  .secure-badge {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    background: rgba(255,255,255,0.12);
-    padding: 8px 14px;
-    border-radius: 999px;
-  }
-
-  .secure-dot {
-    width: 8px;
-    height: 8px;
-    background: #22c55e;
-    border-radius: 50%;
-  }
-
-  /* ===== MAIN ===== */
-  main {
-    flex: 1;
-    display: flex;
-    align-items: center;
     justify-content: center;
     padding: 40px 20px;
   }
@@ -195,33 +132,7 @@
     font-size: 12px;
     color: var(--text-muted);
   }
-</style>
-</head>
-
-<body>
-<script>document.body.classList.add("fade-in");</script>
-
-<!-- HEADER -->
-<header>
-  <div class="header-inner">
-    <div class="brand">
-      <div class="logo">GCB</div>
-      <div class="brand-text">
-        <strong>GCB Digital Banking</strong><br>
-        <span>Secure Client Portal</span>
-      </div>
-    </div>
-    <div class="secure-badge">
-      <div class="secure-dot"></div>
-      Secure Session
-    </div>
-  </div>
-</header>
-
-<!-- MAIN -->
-<main>
-  <div class="portal-card">
-    <div class="card-body">
+dy">
       <div class="status-icon">✓</div>
 
       <h1>Verification Submitted</h1>
@@ -231,18 +142,7 @@
       </p>
 
       <div class="info-box">
-        You will receive an update via SMS or email once verification is completed.
-        Please do not resubmit your details.
-      </div>
-
-      <div class="actions">
-        <a href="index.html" class="btn">Return to Home</a>
-      </div>
-    </div>
-  </div>
-</main>
-
-<!-- FOOTER -->
+    
 <footer>
   ©️ 2026 GCB Bank PLC. All rights reserved.
 </footer>
